@@ -1,2 +1,2 @@
 # billiard_dynamics
-Undergraduate honors thesis on the Birkhoff conjecture for convex billiards. 
+Undergraduate honors thesis on the Birkhoff conjecture for convex billiards. Contains mathematica notebooks used to visualize the dynamics in near-elliptical billiards and calculate Lyapunov exponents, LateX code for honors thesis presentation, LateX code for the actual thesis. Please refer to the thesis pdf for a concise description of the thesis project and background information.

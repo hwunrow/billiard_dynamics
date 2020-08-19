@@ -1,0 +1,167 @@
+\chapter{Background}
+
+Starting with the works of George David Birkhoff in early 1927, billiards have grown to become a popular topic of investigation in the framework of the theory of dynamical systems. Billiard systems are further remarkable for their appearance in a number of problems from optics, accoustics, and classical mechanics.
+
+Similar to billiards in real life, the concept of a billiards system is fairly simple: you have a table and a ball, but in this case the ball has no mass so there is no friction. The ball hits the boundaries of the table and bounces off as it normally would. That is, it moves along in a straight line until it hits the edge of the table where it bounces off such that the angle of incidence equals the angle of reflection. Such systems become increasingly interesting in studying the trajectory of the ball as we change parameters such as the initial position, initial angle, and even the shape of the table. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.45]{CongruentAngles}
+    \caption{Square Billiard where angle of incidence equals the angle of reflection}
+    \label{fig:my_label}
+\end{figure}
+
+\section{Billiard Map}
+We can express these trajectories in the context of a dynamical system. Let $\theta \in [0,2\pi)$ be the angular position measured in radians from the $x$-axis and $\alpha \in (0, \pi)$ be the angle of reflection as shown in Figure \ref{billiardmap}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{BilliardMap}
+    \caption{Illustration of particle's trajectory}
+    \label{billiardmap}
+\end{figure}
+The billiard ball map for this discrete dynamical system is defined as follows
+\begin{equation}
+\begin{split}
+    f: [0, 2\pi) \times (0,\pi) &\rightarrow [0, 2\pi) \times (0,\pi) \\
+    (\theta_n,\alpha_n) &\mapsto (\theta_{n+1},\alpha_{n+1})
+\end{split}
+\end{equation}
+There are two main restrictions on what shape our billiard can be. Let $\Omega \subset \mathbb{R}^2$ be a convex domain. We denote $\partial \Omega$ to be the boundary of the billiard. We require that the boundary of our billiard to be:
+\begin{itemize}
+    \item convex, and 
+    \item smooth
+\end{itemize}
+Note that if the boundary is not convex, then $f$ is not continuous. This is because there may be trajectories that are tangent to the boundary on the inside. If such trajectories are perturbed slightly, the resulting trajectory is drastically changed. We require the boundary to be smooth since the motion of a trajectory that hits a corner is not well defined. Now that we have laid out the basics of the billiard dynamical system, we examine trajectories in a few elementary boundaries.
+
+\section{Billiard in the Disc}
+Although the billiard in a disc is one of the simplest billiards to analyze, there are a few interesting properties. Due to its geometry, the billiard map in a disc can be described by a very simple system of equations.
+\begin{equation}
+    \begin{pmatrix} \theta_{n+1} \\ \alpha_{n+1} \end{pmatrix} = \begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix} \times \begin{pmatrix} \theta_n \\ \alpha_n \end{pmatrix}     
+\end{equation}
+The angle of reflection remains constant after each iteration, and the position angle along the boundary is obtained by rotating the previous position by $2\alpha$. 
+An interesting remark is that if $\alpha_0$ is $\pi$-rational, then our orbit is periodic. Otherwise if $\alpha_0$ is $\pi$-irrational, then the orbit is dense and hits every position along our boundary. Orbits of both types along with their phase space diagrams can be seen in figures \ref{disc1} and \ref{disc2}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.8]{DiscPhaseSpace1}
+    \caption{Disc Billiard with dense orbit}
+    \label{disc1}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.8]{DiscPhaseSpace2}
+    \caption{Disc Billiard with periodic orbit}
+    \label{disc2}
+\end{figure}
+One should take note of the concentric circle that is formed by the trajectories that stay tangent to it in Figure \ref{disc1}. We refer to such curves as caustics. 
+\begin{definition}
+A curve $\Gamma \subset \Omega$ is said to be \textbf{caustic} if any billiard orbit having one segment tangent to $\Gamma$ has all its segments tangent to $\Gamma$.
+\end{definition}
+One should also take note of the formation of invariant curves in the phase space corresponding to particular caustics. These relationships will be examined further in the next section. 
+
+\section{Billiard in the Ellipse}
+We now consider billiards in slightly more complex shapes - ellipses where the boundary $\partial \Omega$ is defined by 
+\begin{equation}
+    \frac{x^2}{a} + \frac{y^2}{b} = 1 \text{   where } a > b
+\end{equation}
+The trajectory in an elliptical billiard is related to its \textit{confocal} conic sections. We say two conic sections are \textit{confocal} if they share the same foci. 
+\begin{remark}
+\label{caustic}
+A billiard trajectory inside $\Omega$ stays tangent to a caustic fixed confocal ellipse or hyperbola. More precisely, the billiard trajectories in $\Omega$ stay tangent to a caustic 
+\begin{equation}
+    \mathbb{C}_{\lambda} \in \Big \{\frac{x^2}{a - \lambda} + \frac{y^2}{b - \lambda} = 1 \Big \}
+\end{equation}
+where $a > b$.
+\end{remark}
+
+\begin{proof}
+This result is equivalent to Poncelet's closure theorem and its elementary geometric proof is shown in \cite{Tabachnikov2011}.
+\end{proof}
+
+It is necessarily true that the confocal conics of $\Omega$ are either hyperbolas or ellipses. Consider the function
+\begin{equation}
+    \label{f}
+    f = \frac{x^2}{a - \lambda} + \frac{y^2}{b - \lambda} - 1 = 0 \hspace{10mm} a > b
+\end{equation}
+For fixed values of $x$ and $y$ we can graph $f$ as a function of $\lambda$ as shown in figure \ref{ConfocalGraph}. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.35]{ConfocalGraph}
+    \caption{Graph of $f$ as a function of $\lambda$ for fixed $x$ and $y$}
+    \label{ConfocalGraph}
+\end{figure}
+As seen in the graph the roots are $\lambda_1 \in (-\infty, b)$ and  $\lambda_2 \in (b,a)$. Note that $\lambda = 0$ defines the original ellipse $\partial \Omega$ and since we are only interested in confocal conics contained within $\partial \Omega$, $\lambda_1 \in (0, b)$. For $\lambda = \lambda_1$ equation \ref{f} defines an ellipse, and for $\lambda = \lambda_2$ it defines a hyperbola. Trajectories of both types are shown below in figures \ref{ConfocalEllipse} and \ref{ConfocalHyperbola}.
+\newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 1\textwidth]{EllipsePhaseSpace3}
+    \caption{Confocal Hyperbola Elliptical Billiard with Phase Space Diagram $a = 1, b = 1.5$}
+    \label{ConfocalHyperbola}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{EllipsePhaseSpace}
+    \caption{Confocal Ellipse Elliptical Billiard with Phase Space Diagram $a = 1, b = 1.5$}
+    \label{ConfocalEllipse}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.39]{EllipsePhaseSpace2}
+    \caption{Elliptical Billiard Phase Space Diagram $a = 1, b = 1.5$}
+    \label{EllipsePS}
+\end{figure}
+Similarly to a billiard in a disc, one can see a relationship between invariant curves in the phase space that correspond to either a confocal hyperbola or confocal ellipse caustic.    If we plot these invariant curves for multiple initial conditions as seen in Figure \ref{EllipsePS}, one can see that the phase space is completely foliated by invariant curves of the billiard map $f$. 
+
+This brings us to the topic of \textit{integrability}. A billiard in an ellipse (and also a disc) are examples of \textit{integrable billiards}. 
+\begin{definition}
+A billiard is said to be \textbf{integrable} if there exists a (smooth) foliation of the whole phase space consisting of invariant curves of the billiard map
+\end{definition}
+\newpage
+
+\begin{remark}
+A billiard in an ellipse is integrable.
+\end{remark}
+
+\begin{proof}
+All the trajectories tangent to a elliptic caustic lie on a curve in the manifold $M$ that is invariant under $f$. Those invariant curves appear as deformations of the invariant lines $\alpha = c$ for some constant $c$ as in the circular billiard. All the trajectories tangent to a hyperbolic caustic lie on two closed curves in $M$. Each curve is invariant under $f^2$. Therefore, the surface $M$ is completely foliated by invariant curves and thus elliptical billiards are integrable. 
+\end{proof}
+
+It is well known that elliptical billiards are integrable. However, a long standing open problem in billiard systems is the converse. That is, proving that the only integrable billiards are ellipses.
+
+\section{Birkhoff Conjecture}
+
+\textbf{Birkhoff Conjecture} \textit{If a billiard in }$\Omega$ \textit{ is integrable}, \textit{then the boundary } $\partial\Omega$ \textit{ is an ellipse.}
+\newline
+
+Birkhoff's question of the existence of other integrable billiards other than ellipses has long been studied. We will briefly describe the progress that has been made to towards proving this conjecture.
+In \cite{Mather1982}, Mather proved the non-existence of caustics (hence, the non-integrability) if the curvature of the boundary vanishes at one point. This further justifies our restriction to strictly convex billiards. As stated by Mather,
+
+We will say a trajectory is $\varepsilon$-glancing if for at least one bounce the angle of reflection (with either the positive or negative tangent of $\partial \Omega$ at the point of reflection) is $ < \varepsilon$. If  $\varepsilon < \pi/2$ , we can distinguish between a positively  $\varepsilon$-glancing trajectory and
+a negatively $\varepsilon$-glancing trajectory according to whether it is the positive or negative tangent to $\partial \Omega$ which the direction of reflection is close to.
+A trajectory might be positively $ \varepsilon$-glancing at one bounce and negatively $\varepsilon$-glancing at another bounce. Thus, one can ask whether for every  $\varepsilon> 0$, there exist
+trajectories which are both positively and negatively $\varepsilon$ -glancing. We will prove a
+theorem which shows in some cases the answer is yes.
+\begin{theorem}
+If the curvature of $\partial \Omega$ vanishes at some point, then for every  $\varepsilon > 0$, there exist trajectories which are both positively and negatively  $\varepsilon$-glancing. (Mather; 1982)
+\end{theorem}
+
+In \cite{Bialy1993}, Bialy proved the following result concerning global integrability.
+
+\begin{theorem}
+ If the phase space of the billiard ball map is globally foliated by continuous invariant curves which are not null-homotopic, then it is the circular billiard. (Bialy; 1993)
+\end{theorem}
+
+More recently, in \cite{Avila2016}, Avila, De Simoi, and Kaloshin proved a local version of this conjecture for ellipses with small eccentricity.
+
+\begin{theorem}
+A small integrable perturbation of an ellipse of small eccentricity must be an ellipse. (Avila, Simoi, Kaloshin; 2016)
+\end{theorem}
+
+In \cite{Kaloshin2016}, Kaloshin and Sorrentino expand upon this result in which they prove a local version of this conjecture for arbitrary eccentricity.
+
+\begin{theorem}
+ A small integrable perturbation of an ellipse of arbitrary eccentricity must be an ellipse. (Kaloshin, Sorrentino; 2017)
+\end{theorem}
+
+Note that Theorems 3 and 4 are only local versions of this conjecture. That is, there still may be examples of integrable billiards that are very different from ellipses. In the following section, similarly to in \cite{Kaloshin2016}, we will analyze the integrability of perturbations of elliptical billiards with arbitrary eccentricity.

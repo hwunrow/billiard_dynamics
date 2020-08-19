@@ -1,0 +1,656 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     26436,        648]
+NotebookOptionsPosition[     25827,        625]
+NotebookOutlinePosition[     26171,        640]
+CellTagsIndexPosition[     26128,        637]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"g", "[", 
+    RowBox[{"a_", ",", " ", "b_", ",", "x_", ",", "y_"}], "]"}], " ", "=", 
+   " ", 
+   RowBox[{
+    RowBox[{"a", "*", 
+     RowBox[{"x", "^", "2"}]}], " ", "+", " ", 
+    RowBox[{"b", "*", 
+     RowBox[{"y", "^", "2"}]}], " ", "-", " ", "1"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ellp", "[", 
+    RowBox[{"a_", ",", " ", "b_", ",", "x_"}], "]"}], " ", "=", " ", 
+   FractionBox[
+    SqrtBox[
+     RowBox[{"1", "-", 
+      RowBox[{"a", " ", 
+       SuperscriptBox["x", "2"]}]}]], 
+    SqrtBox["b"]]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ellm", "[", 
+    RowBox[{"a_", ",", " ", "b_", ",", "x_"}], "]"}], "=", " ", 
+   RowBox[{"-", 
+    FractionBox[
+     SqrtBox[
+      RowBox[{"1", "-", 
+       RowBox[{"a", " ", 
+        SuperscriptBox["x", "2"]}]}]], 
+     SqrtBox["b"]]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"realEllipse", "[", 
+   RowBox[{
+   "a_", ",", " ", "b_", ",", " ", "start\[Theta]_", ",", " ", 
+    "start\[Alpha]_", ",", "n_"}], "]"}], " ", ":=", "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "start", ",", " ", "s", ",", " ", "startx", ",", " ", "starty", ",", " ",
+       "startt", ",", " ", "angle", ",", "list", ",", " ", "ss", ",", " ", 
+      "xx", ",", " ", "yy", ",", " ", "u", ",", " ", "slope", ",", " ", "v", 
+      ",", " ", "\[Phi]", ",", " ", "plot", ",", "coord", ",", "gr1", ",", 
+      "gr2"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"start", " ", "=", " ", 
+      RowBox[{"NSolve", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"g", "[", 
+            RowBox[{"a", ",", " ", "b", ",", "x", ",", "y"}], "]"}], " ", 
+           "\[Equal]", " ", "0"}], ",", 
+          RowBox[{"x", " ", "==", " ", 
+           RowBox[{"t", "*", 
+            RowBox[{"Cos", "[", "start\[Theta]", "]"}]}]}], ",", 
+          RowBox[{"y", " ", "==", 
+           RowBox[{"t", "*", 
+            RowBox[{"Sin", "[", "start\[Theta]", "]"}]}]}], ",", 
+          RowBox[{"t", "\[GreaterEqual]", " ", "0"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "y", ",", "t"}], "}"}], ",", "Reals"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"s", "=", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"x", ",", "y", ",", "t"}], "}"}], "/.", "start"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"startx", " ", "=", " ", 
+      RowBox[{"s", "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"starty", " ", "=", " ", 
+      RowBox[{"s", "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ",", "2"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"startt", " ", "=", " ", 
+      RowBox[{"s", "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ",", "3"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"coord", " ", "=", " ", 
+      RowBox[{"{", 
+       RowBox[{"{", 
+        RowBox[{"startx", ",", "starty"}], "}"}], "}"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"angle", " ", "=", " ", "start\[Alpha]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"j", " ", "=", " ", "1"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"list", " ", "=", " ", 
+      RowBox[{"{", 
+       RowBox[{"{", 
+        RowBox[{"start\[Theta]", ",", "start\[Alpha]"}], "}"}], "}"}]}], ";", 
+     RowBox[{"(*", " ", 
+      RowBox[{
+      "stores", " ", "position", " ", "angles", " ", "and", " ", "trajectory",
+        " ", "angles"}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"While", "[", 
+      RowBox[{
+       RowBox[{"j", " ", "\[LessEqual]", " ", "n"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"ss", "=", 
+         RowBox[{"NSolve", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"g", "[", 
+               RowBox[{"a", ",", " ", "b", ",", "x", ",", "y"}], "]"}], " ", 
+              "\[Equal]", " ", "0"}], ",", 
+             RowBox[{"x", " ", "==", 
+              RowBox[{"startx", " ", "+", " ", 
+               RowBox[{"t", "*", 
+                RowBox[{"Cos", "[", "angle", "]"}]}]}]}], ",", 
+             RowBox[{"y", " ", "==", 
+              RowBox[{"starty", " ", "+", " ", 
+               RowBox[{"t", "*", 
+                RowBox[{"Sin", "[", "angle", "]"}]}]}]}], ",", 
+             RowBox[{"t", "\[GreaterEqual]", " ", "0"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "y", ",", "t"}], "}"}], ",", "Reals"}], "]"}]}],
+         ";", "\[IndentingNewLine]", 
+        RowBox[{"xx", "=", " ", 
+         RowBox[{"ss", "[", 
+          RowBox[{"[", 
+           RowBox[{"All", ",", "1", ",", "2"}], "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"yy", "=", " ", 
+         RowBox[{"ss", "[", 
+          RowBox[{"[", 
+           RowBox[{"All", ",", "2", ",", "2"}], "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Update", " ", "for", " ", "next", " ", "iteration", " ", "of", " ", 
+          "while", " ", "loop"}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"startx", " ", "=", " ", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"startx", " ", "\[LessEqual]", "  ", 
+             RowBox[{
+              RowBox[{"xx", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "+", "0.0000001"}]}], " ", "&&",
+             " ", 
+            RowBox[{"startx", " ", "\[GreaterEqual]", "   ", 
+             RowBox[{
+              RowBox[{"xx", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "-", "0.0000001"}]}]}], " ", 
+           ",", 
+           RowBox[{"xx", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], ",", 
+           RowBox[{"xx", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"starty", " ", "=", " ", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"starty", " ", "\[LessEqual]", "  ", 
+             RowBox[{
+              RowBox[{"yy", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "+", "0.0000001"}]}], " ", "&&",
+             " ", 
+            RowBox[{"starty", " ", "\[GreaterEqual]", "   ", 
+             RowBox[{
+              RowBox[{"yy", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "-", "0.0000001"}]}]}], ",", 
+           RowBox[{"yy", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], ",", 
+           RowBox[{"yy", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"coord", " ", "=", " ", 
+         RowBox[{"Append", "[", 
+          RowBox[{"coord", ",", 
+           RowBox[{"{", 
+            RowBox[{"startx", ",", "starty"}], "}"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"u", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"xx", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], " ", "-", " ", 
+            RowBox[{"xx", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+           RowBox[{
+            RowBox[{"yy", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], " ", "-", " ", 
+            RowBox[{"yy", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"slope", " ", "=", " ", 
+         RowBox[{"If", " ", "[", 
+          RowBox[{
+           RowBox[{"starty", " ", "\[GreaterEqual]", " ", "0"}], ",", 
+           RowBox[{
+            RowBox[{"D", "[", 
+             RowBox[{
+              RowBox[{"ellp", "[", 
+               RowBox[{"a", ",", " ", "b", ",", " ", "x"}], "]"}], ",", "x"}],
+              "]"}], "/.", 
+            RowBox[{"{", 
+             RowBox[{"x", "\[Rule]", " ", "startx"}], "}"}]}], ",", 
+           RowBox[{
+            RowBox[{"D", "[", 
+             RowBox[{
+              RowBox[{"ellm", "[", 
+               RowBox[{"a", ",", " ", "b", ",", "x"}], "]"}], ",", "x"}], 
+             "]"}], "/.", 
+            RowBox[{"{", 
+             RowBox[{"x", "\[Rule]", " ", "startx"}], "}"}]}]}], "]"}]}], ";",
+         "\[IndentingNewLine]", 
+        RowBox[{"v", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "slope"}], "}"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"\[Phi]", " ", "=", " ", 
+         RowBox[{"Min", "[", 
+          RowBox[{
+           RowBox[{"VectorAngle", "[", 
+            RowBox[{"u", ",", "v"}], "]"}], ",", 
+           RowBox[{"Pi", " ", "-", 
+            RowBox[{"VectorAngle", "[", 
+             RowBox[{"u", ",", "v"}], "]"}]}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"list", "=", " ", 
+         RowBox[{"Append", "[", 
+          RowBox[{"list", ",", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"ArcTan", "[", 
+              RowBox[{"startx", ",", "starty"}], "]"}], ",", "\[Phi]"}], 
+            "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"angle", " ", "=", "  ", 
+         RowBox[{"angle", " ", "+", " ", 
+          RowBox[{"2", " ", "*", " ", "\[Phi]"}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"j", "++"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"plot", " ", "=", " ", 
+      RowBox[{"Plot", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"ellp", "[", 
+           RowBox[{"a", ",", " ", "b", ",", " ", "x"}], "]"}], ",", 
+          RowBox[{"ellm", "[", 
+           RowBox[{"a", ",", " ", "b", ",", " ", "x"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{
+           RowBox[{"-", "1"}], "/", 
+           RowBox[{"Sqrt", "[", "a", "]"}]}], ",", 
+          RowBox[{"1", "/", 
+           RowBox[{"Sqrt", "[", "a", "]"}]}]}], "}"}], ",", 
+        RowBox[{"Axes", " ", "\[Rule]", " ", "False"}], ",", " ", 
+        RowBox[{"PlotStyle", "\[Rule]", " ", "Black"}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "Automatic"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"gr1", " ", "=", 
+      RowBox[{"Show", "[", 
+       RowBox[{"plot", ",", "\[IndentingNewLine]", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Line", "[", "coord", "]"}], "}"}], "]"}]}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"PointSize", "[", "Large", "]"}], ",", "Red", ",", 
+            RowBox[{"Thickness", "[", "Large", "]"}], ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"startx", "+", 
+                  RowBox[{"startt", "*", 
+                   RowBox[{"Cos", "[", "start\[Alpha]", "]"}]}]}], ",", 
+                 RowBox[{"starty", "+", 
+                  RowBox[{"startt", "*", 
+                   RowBox[{"Cos", "[", "start\[Alpha]", "]"}]}]}]}], "}"}], 
+               ",", 
+               RowBox[{"{", 
+                RowBox[{"startx", ",", "starty"}], "}"}]}], "}"}], "]"}]}], 
+           "}"}], "]"}]}], "*)"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"gr2", " ", "=", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{
+        RowBox[{"Map", "[", 
+         RowBox[{"Point", ",", "list"}], "]"}], ",", 
+        RowBox[{"Frame", "\[Rule]", " ", "True"}], ",", " ", 
+        RowBox[{"AspectRatio", "\[Rule]", "1"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"GraphicsRow", "[", 
+      RowBox[{"{", 
+       RowBox[{"gr1", ",", "gr2"}], "}"}], "]"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.7026152789043913`*^9, 3.702615283186205*^9}, {
+  3.7026153926649885`*^9, 3.7026153932247868`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"realEllipse", "[", 
+    RowBox[{
+    "a", ",", " ", "b", ",", " ", "start\[Theta]", ",", " ", "start\[Alpha]", 
+     ",", " ", "n"}], "]"}], ",", "\[IndentingNewLine]", 
+   "\"\<starting position\>\"", ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"start\[Theta]", ",", "0", ",", "\"\<\>\""}], "}"}], ",", "0", 
+     ",", "Pi", ",", ".01", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "Tiny"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", "\"\<angle of starting position\>\"", ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"start\[Alpha]", ",", 
+       RowBox[{"3", 
+        RowBox[{"Pi", "/", "4"}]}], ",", "\"\<\>\""}], "}"}], ",", "0", ",", 
+     "Pi", ",", ".01", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "Tiny"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", "\"\<a\>\"", ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", "1", ",", "\"\<\>\""}], "}"}], ",", ".1", ",", "2", 
+     ",", ".01", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "Tiny"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", "\"\<b\>\"", ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"b", ",", "1", ",", "\"\<\>\""}], "}"}], ",", ".1", ",", "2", 
+     ",", ".01", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "Tiny"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", "\"\<num reflections\>\"", ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "1", ",", "\"\<\>\""}], "}"}], ",", "1", ",", "200", 
+     ",", "1", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "Tiny"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"SaveDefinitions", "\[Rule]", "True"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 1, $CellContext`b$$ = 
+    1, $CellContext`n$$ = 54, $CellContext`start\[Alpha]$$ = 
+    2.35, $CellContext`start\[Theta]$$ = 0, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold["starting position"], Manipulate`Dump`ThisIsNotAControl}, {{
+       Hold[$CellContext`start\[Theta]$$], 0, ""}, 0, Pi, 0.01}, {
+      Hold["angle of starting position"], 
+      Manipulate`Dump`ThisIsNotAControl}, {{
+       Hold[$CellContext`start\[Alpha]$$], Rational[3, 4] Pi, ""}, 0, Pi, 
+      0.01}, {
+      Hold["a"], Manipulate`Dump`ThisIsNotAControl}, {{
+       Hold[$CellContext`a$$], 1, ""}, 0.1, 2, 0.01}, {
+      Hold["b"], Manipulate`Dump`ThisIsNotAControl}, {{
+       Hold[$CellContext`b$$], 1, ""}, 0.1, 2, 0.01}, {
+      Hold["num reflections"], Manipulate`Dump`ThisIsNotAControl}, {{
+       Hold[$CellContext`n$$], 1, ""}, 1, 200, 1}}, Typeset`size$$ = {
+    925., {238., 245.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = False, $CellContext`start\[Theta]$124839$$ = 
+    0, $CellContext`start\[Alpha]$124840$$ = 0, $CellContext`a$124841$$ = 
+    0, $CellContext`b$124842$$ = 0, $CellContext`n$124843$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 1, $CellContext`b$$ = 
+        1, $CellContext`n$$ = 1, $CellContext`start\[Alpha]$$ = 
+        Rational[3, 4] Pi, $CellContext`start\[Theta]$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`start\[Theta]$$, \
+$CellContext`start\[Theta]$124839$$, 0], 
+        Hold[$CellContext`start\[Alpha]$$, \
+$CellContext`start\[Alpha]$124840$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$124841$$, 0], 
+        Hold[$CellContext`b$$, $CellContext`b$124842$$, 0], 
+        Hold[$CellContext`n$$, $CellContext`n$124843$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> $CellContext`realEllipse[$CellContext`a$$, $CellContext`b$$, \
+$CellContext`start\[Theta]$$, $CellContext`start\[Alpha]$$, $CellContext`n$$],
+       "Specifications" :> {
+       "starting position", {{$CellContext`start\[Theta]$$, 0, ""}, 0, Pi, 
+         0.01, Appearance -> "Labeled", ImageSize -> Tiny}, 
+        "angle of starting position", {{$CellContext`start\[Alpha]$$, 
+          Rational[3, 4] Pi, ""}, 0, Pi, 0.01, Appearance -> "Labeled", 
+         ImageSize -> Tiny}, 
+        "a", {{$CellContext`a$$, 1, ""}, 0.1, 2, 0.01, Appearance -> 
+         "Labeled", ImageSize -> Tiny}, 
+        "b", {{$CellContext`b$$, 1, ""}, 0.1, 2, 0.01, Appearance -> 
+         "Labeled", ImageSize -> Tiny}, 
+        "num reflections", {{$CellContext`n$$, 1, ""}, 1, 200, 1, Appearance -> 
+         "Labeled", ImageSize -> Tiny}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{1186., {270., 277.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`realEllipse[
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`b, 
+          Blank[]], 
+         Pattern[$CellContext`start\[Theta], 
+          Blank[]], 
+         Pattern[$CellContext`start\[Alpha], 
+          Blank[]], 
+         Pattern[$CellContext`n, 
+          Blank[]]] := 
+       Module[{$CellContext`start, $CellContext`s, $CellContext`startx, \
+$CellContext`starty, $CellContext`startt, $CellContext`angle, \
+$CellContext`list, $CellContext`ss, $CellContext`xx, $CellContext`yy, \
+$CellContext`u, $CellContext`slope, $CellContext`v, $CellContext`\[Phi], \
+$CellContext`plot, $CellContext`coord, $CellContext`gr1, $CellContext`gr2}, \
+$CellContext`start = 
+          NSolve[{$CellContext`g[$CellContext`a, $CellContext`b, \
+$CellContext`x, $CellContext`y] == 
+             0, $CellContext`x == $CellContext`t 
+              Cos[$CellContext`start\[Theta]], $CellContext`y == \
+$CellContext`t Sin[$CellContext`start\[Theta]], $CellContext`t >= 
+             0}, {$CellContext`x, $CellContext`y, $CellContext`t}, 
+            Reals]; $CellContext`s = 
+          ReplaceAll[{$CellContext`x, $CellContext`y, $CellContext`t}, \
+$CellContext`start]; $CellContext`startx = 
+          Part[$CellContext`s, 1, 1]; $CellContext`starty = 
+          Part[$CellContext`s, 1, 2]; $CellContext`startt = 
+          Part[$CellContext`s, 1, 
+            3]; $CellContext`coord = {{$CellContext`startx, \
+$CellContext`starty}}; $CellContext`angle = $CellContext`start\[Alpha]; \
+$CellContext`j = 
+          1; $CellContext`list = {{$CellContext`start\[Theta], \
+$CellContext`start\[Alpha]}}; 
+         While[$CellContext`j <= $CellContext`n, $CellContext`ss = 
+            NSolve[{$CellContext`g[$CellContext`a, $CellContext`b, \
+$CellContext`x, $CellContext`y] == 
+               0, $CellContext`x == $CellContext`startx + $CellContext`t 
+                 Cos[$CellContext`angle], $CellContext`y == \
+$CellContext`starty + $CellContext`t Sin[$CellContext`angle], $CellContext`t >= 
+               0}, {$CellContext`x, $CellContext`y, $CellContext`t}, 
+              Reals]; $CellContext`xx = 
+            Part[$CellContext`ss, All, 1, 2]; $CellContext`yy = 
+            Part[$CellContext`ss, All, 2, 2]; $CellContext`startx = If[
+              
+              And[$CellContext`startx <= 
+               Part[$CellContext`xx, 1] + 1.*^-7, $CellContext`startx >= 
+               Part[$CellContext`xx, 1] - 1.*^-7], 
+              Part[$CellContext`xx, 2], 
+              Part[$CellContext`xx, 1]]; $CellContext`starty = If[
+              
+              And[$CellContext`starty <= 
+               Part[$CellContext`yy, 1] + 1.*^-7, $CellContext`starty >= 
+               Part[$CellContext`yy, 1] - 1.*^-7], 
+              Part[$CellContext`yy, 2], 
+              Part[$CellContext`yy, 1]]; $CellContext`coord = 
+            Append[$CellContext`coord, {$CellContext`startx, \
+$CellContext`starty}]; $CellContext`u = {
+             Part[$CellContext`xx, 1] - Part[$CellContext`xx, 2], 
+              Part[$CellContext`yy, 1] - 
+              Part[$CellContext`yy, 2]}; $CellContext`slope = 
+            If[$CellContext`starty >= 0, 
+              ReplaceAll[
+               D[
+                $CellContext`ellp[$CellContext`a, $CellContext`b, \
+$CellContext`x], $CellContext`x], {$CellContext`x -> $CellContext`startx}], 
+              ReplaceAll[
+               D[
+                $CellContext`ellm[$CellContext`a, $CellContext`b, \
+$CellContext`x], $CellContext`x], {$CellContext`x -> $CellContext`startx}]]; \
+$CellContext`v = {1, $CellContext`slope}; $CellContext`\[Phi] = Min[
+              VectorAngle[$CellContext`u, $CellContext`v], Pi - 
+              VectorAngle[$CellContext`u, $CellContext`v]]; $CellContext`list = 
+            Append[$CellContext`list, {
+               
+               ArcTan[$CellContext`startx, $CellContext`starty], \
+$CellContext`\[Phi]}]; $CellContext`angle = $CellContext`angle + 
+             2 $CellContext`\[Phi]; Increment[$CellContext`j]; 
+           Null]; $CellContext`plot = Plot[{
+             $CellContext`ellp[$CellContext`a, $CellContext`b, \
+$CellContext`x], 
+             $CellContext`ellm[$CellContext`a, $CellContext`b, \
+$CellContext`x]}, {$CellContext`x, (-1)/Sqrt[$CellContext`a], 1/
+             Sqrt[$CellContext`a]}, Axes -> False, PlotStyle -> Black, 
+            AspectRatio -> Automatic]; $CellContext`gr1 = 
+          Show[$CellContext`plot, 
+            Graphics[{
+              Line[$CellContext`coord]}]]; $CellContext`gr2 = Graphics[
+            Map[Point, $CellContext`list], Frame -> True, AspectRatio -> 1]; 
+         GraphicsRow[{$CellContext`gr1, $CellContext`gr2}]], $CellContext`g[
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`b, 
+          Blank[]], 
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`y, 
+          
+          Blank[]]] = -1 + $CellContext`a $CellContext`x^2 + $CellContext`b \
+$CellContext`y^2, $CellContext`j = 3, $CellContext`ellp[
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`b, 
+          Blank[]], 
+         Pattern[$CellContext`x, 
+          Blank[]]] = 
+       Sqrt[1 - $CellContext`a $CellContext`x^2]/
+        Sqrt[$CellContext`b], $CellContext`ellm[
+         Pattern[$CellContext`a, 
+          Blank[]], 
+         Pattern[$CellContext`b, 
+          Blank[]], 
+         Pattern[$CellContext`x, 
+          Blank[]]] = -(Sqrt[1 - $CellContext`a $CellContext`x^2]/
+         Sqrt[$CellContext`b])}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.702615330134205*^9, 3.702615589358385*^9, 
+  3.702615622666975*^9, 3.7026156641047654`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Power","infy",
+   "\"Infinite expression \\!\\(\\*FractionBox[\\\"1\\\", \
+SqrtBox[\\\"0.`\\\"]]\\) encountered.\"",2,21,39,32448529607600835709,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.702615674416921*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Infinity","indet",
+   "\"Indeterminate expression \\!\\(\\*RowBox[{\\\"0\\\", \\\" \\\", \
+\\\"ComplexInfinity\\\"}]\\) encountered.\"",2,21,40,32448529607600835709,
+   "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7026156744439397`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Infinity","indet",
+   "\"Indeterminate expression \\!\\(\\*RowBox[{\\\"0\\\", \\\" \\\", \
+\\\"ComplexInfinity\\\"}]\\) encountered.\"",2,21,41,32448529607600835709,
+   "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7026156744686804`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Power","infy",
+   "\"Infinite expression \\!\\(\\*FractionBox[\\\"1\\\", \
+SqrtBox[\\\"0.`\\\"]]\\) encountered.\"",2,21,55,32448529607600835709,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7026156857881727`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Infinity","indet",
+   "\"Indeterminate expression \\!\\(\\*RowBox[{\\\"0\\\", \\\" \\\", \
+\\\"ComplexInfinity\\\"}]\\) encountered.\"",2,21,56,32448529607600835709,
+   "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7026156858147445`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Infinity","indet",
+   "\"Indeterminate expression \\!\\(\\*RowBox[{\\\"0\\\", \\\" \\\", \
+\\\"ComplexInfinity\\\"}]\\) encountered.\"",2,21,57,32448529607600835709,
+   "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7026156858468285`*^9}]
+}, Open  ]]
+},
+WindowSize->{1904, 997},
+WindowMargins->{{1280, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (July 28, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 11950, 306, 782, "Input"],
+Cell[CellGroupData[{
+Cell[12533, 330, 2217, 53, 278, "Input"],
+Cell[14753, 385, 9320, 185, 597, "Output"],
+Cell[24076, 572, 269, 6, 43, "Message"],
+Cell[24348, 580, 295, 7, 21, "Message"],
+Cell[24646, 589, 295, 7, 21, "Message"],
+Cell[24944, 598, 271, 6, 43, "Message"],
+Cell[25218, 606, 295, 7, 21, "Message"],
+Cell[25516, 615, 295, 7, 21, "Message"]
+}, Open  ]]
+}
+]
+*)
+
